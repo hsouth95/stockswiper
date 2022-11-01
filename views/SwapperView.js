@@ -72,10 +72,12 @@ export default function SwapperView(props) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>{symbol}</Text>
-      <Image
-        style={styles.image}
-        source={require("../assets/cisco.jpg")}
-      />
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.image}
+          source={`https://companiesmarketcap.com/img/company-logos/256/${symbol}.webp`}
+        />
+      </View>
       <View style={styles.buttonContainer}>
         <TouchableHighlight
           onPress={onPressDown}
@@ -106,9 +108,19 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
   },
-  image: {
-    height: 400,
+  imageContainer: {
+    flex: 1,
     width: "100%",
+    paddingBottom: 10,
+    paddingTop: 10,
+  },
+  image: {
+    flex: 1,
+    height: null,
+    width: null,
+    resizeMode: "contain",
+    paddingBottom: 10,
+    paddingTop: 10,
   },
   buttonContainer: {
     flexDirection: "row",

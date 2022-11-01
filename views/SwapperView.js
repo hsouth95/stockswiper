@@ -1,4 +1,6 @@
 import { StyleSheet, Text, View, Image, SafeAreaView, TouchableHighlight } from "react-native";
+import React, { useEffect, useState } from "react";
+import yahooFinance from "yahoo-finance2";
 
 const POPULAR_SYMBOLS = [
   "AAPL",
@@ -27,18 +29,49 @@ const POPULAR_SYMBOLS = [
   "NIKE",
 ];
 
-export default function SwapperView() {
+export default function SwapperView(props) {
+  const [symbol, setSymbol] = useState(props.symbol);
+  const [priceDifference, setPriceDifference] = useState(0);
+
   const onPressUp = () => {
-    alert("You pressed up!!");
+    if (priceDifference < 0) {
+      alert("Wrong");
+    } else {
+      alert("Right!");
+    }
   };
 
   const onPressDown = () => {
-    alert("You pressed down!!");
+    if (priceDifference > 0) {
+      alert("Wrong");
+    } else {
+      alert("Right!");
+    }
   };
+
+  useEffect(() => {
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    yahooFinance
+      .historical(symbol, {
+        period1: yesterday,
+        interval: "1d",
+      })
+      .then((quotes) => {
+        let open = quotes[0].open;
+        let close = quotes[0].close;
+
+        let valueDifference = open - close;
+        let percentageDifference = valueDifference / close;
+
+        setPriceDifference(percentageDifference);
+      });
+  });
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Stock Swiper</Text>
+      <Text style={styles.text}>{symbol}</Text>
       <Image
         style={styles.image}
         source={require("../assets/cisco.jpg")}

@@ -1,7 +1,14 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, Image, SafeAreaView, TouchableHighlight } from "react-native";
 
 export default function App() {
+  const onPressUp = () => {
+    alert("You pressed up!!");
+  };
+
+  const onPressDown = () => {
+    alert("You pressed down!!");
+  };
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Stock Swiper</Text>
@@ -10,12 +17,18 @@ export default function App() {
         source={require("./assets/cisco.jpg")}
       />
       <View style={styles.buttonContainer}>
-        <View style={styles.downButton}>
+        <TouchableHighlight
+          onPress={onPressDown}
+          style={styles.downButton}
+        >
           <Text style={styles.buttonText}>Down</Text>
-        </View>
-        <View style={styles.upButton}>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={onPressUp}
+          style={styles.upButton}
+        >
           <Text style={styles.buttonText}>Up</Text>
-        </View>
+        </TouchableHighlight>
       </View>
     </SafeAreaView>
   );
@@ -42,12 +55,13 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%",
     width: "100%",
-    padding: 0,
     justifyContent: "center",
   },
   upButton: {
     backgroundColor: "green",
     justifyContent: "center",
+    width: "100%",
+    height: "100%",
     flex: 1,
   },
   downButton: {

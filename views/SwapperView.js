@@ -132,5 +132,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 32,
   },
 });

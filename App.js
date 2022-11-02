@@ -1,33 +1,19 @@
-import React from "react";
-import yahooFinance from "yahoo-finance2";
-
 import SwapperView from "./views/SwapperView";
-const POPULAR_SYMBOLS = [
-  "AAPL",
-  "MSFT",
-  "GOOG",
-  "AMZN",
-  "TSLA",
-  "BRK-B",
-  "XOM",
-  "V",
-  "WMT",
-  "NVDA",
-  "MA",
-  "005930.KS", // SAMSUNG
-  "PFE",
-  "KO",
-  "META",
-  "PEP",
-  "SHEL",
-  "MCD",
-  "DIS",
-  "CSCO",
-  "ACN",
-  "CRM",
-  "ADBE",
-  "NIKE",
-];
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SwapperScreen from "./screens/SwapperScreen";
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
-  return <SwapperView symbol={POPULAR_SYMBOLS[Math.floor(Math.random() * POPULAR_SYMBOLS.length)]} />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initalRouteHome="Home">
+        <Stack.Screen
+          name="Home"
+          component={SwapperScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }

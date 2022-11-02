@@ -1,51 +1,26 @@
 import { StyleSheet, Text, View, Image, SafeAreaView, TouchableHighlight } from "react-native";
 import React, { useEffect, useState } from "react";
 import yahooFinance from "yahoo-finance2";
+import { useNavigation } from "@react-navigation/native";
 
-const POPULAR_SYMBOLS = [
-  "AAPL",
-  "MSFT",
-  "GOOG",
-  "AMZN",
-  "TSLA",
-  "BRK-B",
-  "XOM",
-  "V",
-  "WMT",
-  "NVDA",
-  "MA",
-  "005930.KS", // SAMSUNG
-  "PFE",
-  "KO",
-  "META",
-  "PEP",
-  "SHEL",
-  "MCD",
-  "DIS",
-  "CSCO",
-  "ACN",
-  "CRM",
-  "ADBE",
-  "NIKE",
-];
-
-export default function SwapperView(props) {
-  const [symbol, setSymbol] = useState(props.symbol);
+export default function SwapperView({ symb, onRight, onWrong }) {
+  console.log("Rendering!");
+  const [symbol, setSymbol] = useState(symb);
   const [priceDifference, setPriceDifference] = useState(0);
 
   const onPressUp = () => {
     if (priceDifference < 0) {
-      alert("Wrong");
+      onWrong();
     } else {
-      alert("Right!");
+      onRight();
     }
   };
 
   const onPressDown = () => {
     if (priceDifference > 0) {
-      alert("Wrong");
+      onWrong();
     } else {
-      alert("Right!");
+      onRight();
     }
   };
 
@@ -99,12 +74,12 @@ export default function SwapperView(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: "#FFF",
     alignItems: "center",
     flexDirection: "column",
   },
   text: {
-    color: "#fff",
+    color: "#000",
     fontSize: 32,
     fontWeight: "bold",
   },
@@ -130,14 +105,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   upButton: {
-    backgroundColor: "green",
+    backgroundColor: "#2ecc71",
     justifyContent: "center",
     width: "100%",
     height: "100%",
     flex: 1,
   },
   downButton: {
-    backgroundColor: "red",
+    backgroundColor: "#e74c3c",
     justifyContent: "center",
     flex: 1,
   },

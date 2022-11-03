@@ -1,4 +1,5 @@
-import SwapperView from "./views/SwapperView";
+import HomeScreen from "./screens/HomeScreen";
+import SummaryScreen from "./screens/SummaryScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SwapperScreen from "./screens/SwapperScreen";
@@ -11,7 +12,15 @@ export default function App() {
       <Stack.Navigator initalRouteHome="Home">
         <Stack.Screen
           name="Home"
+          component={HomeScreen}
+        />
+        <Stack.Screen
+          name="Swapper"
           component={SwapperScreen}
+        />
+        <Stack.Screen
+          name="Summary"
+          component={SummaryScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

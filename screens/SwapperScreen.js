@@ -36,6 +36,11 @@ export default function SwapperScreen({ navigation }) {
   const [count, setCount] = useState(0);
   const [symbol, setSymbol] = useState(randomSymbols[count]);
 
+  // TODO: Implement hook for count changing
+  // useEffect(() => {
+
+  // }, [count]);
+
   const setNextSymbol = () => {
     let tempCount = count + 1;
     setCount(tempCount);
@@ -47,6 +52,8 @@ export default function SwapperScreen({ navigation }) {
     answers.push(false);
     if (count + 1 != randomSymbols.length) {
       setNextSymbol();
+    } else {
+      navigation.navigate("Summary");
     }
   };
   const onRight = () => {
@@ -54,6 +61,8 @@ export default function SwapperScreen({ navigation }) {
     answers.push(true);
     if (count + 1 != randomSymbols.length) {
       setNextSymbol();
+    } else {
+      navigation.navigate("Summary");
     }
   };
 

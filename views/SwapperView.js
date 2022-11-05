@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import yahooFinance from "yahoo-finance2";
 import { useNavigation } from "@react-navigation/native";
 
-export default function SwapperView({ symb, onRight, onWrong }) {
+export default function SwapperView({ company, onRight, onWrong }) {
   console.log("Rendering!");
-  const [symbol, setSymbol] = useState(symb);
-  const [priceDifference, setPriceDifference] = useState(0);
+  const [symbol, setSymbol] = useState(company?.symbol);
+  const [priceDifference, setPriceDifference] = useState(company?.priceDifference);
 
   const onPressUp = () => {
     if (priceDifference < 0) {

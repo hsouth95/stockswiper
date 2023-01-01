@@ -1,7 +1,8 @@
 import SwapperView from "../views/SwapperView";
 import { useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native-web";
 
-import yahooFinance from "yahoo-finance2";
+const LAMBDA_URL = "https://lbn44tsfqvompigtorjt77w3ju0qcdzz.lambda-url.us-east-1.on.aws/";
 
 const POPULAR_SYMBOLS = [
   "AAPL",
@@ -15,7 +16,6 @@ const POPULAR_SYMBOLS = [
   "WMT",
   "NVDA",
   "MA",
-  "005930.KS", // SAMSUNG
   "PFE",
   "KO",
   "META",
@@ -27,7 +27,6 @@ const POPULAR_SYMBOLS = [
   "ACN",
   "CRM",
   "ADBE",
-  "NIKE",
 ];
 
 const randomSymbols = [...POPULAR_SYMBOLS].sort(() => 0.5 - Math.random()).slice(0, 5);
@@ -40,45 +39,45 @@ export default function SwapperScreen({ navigation }) {
   const [symbol, setSymbol] = useState(randomSymbols[count]);
   const [company, setCompany] = useState(null);
 
-  // TODO: Implement hook for count changing
-  // useEffect(() => {
-
-  // }, [count]);
-
   useEffect(() => {
-    let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
+    fetch(LAMBDA_URL, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        for (const symb of randomSymbols) {
+          if (data[symb]) {
+            const chosenCompany = data[symb][0];
+            let open = chosenCompany.open;
+            let close = chosenCompany.close;
 
-    yahooFinance
-      .historical(symbol, {
-        period1: yesterday,
-        interval: "1d",
+            let valueDifference = open - close;
+            let percentageDifference = valueDifference / close;
+
+            let companyInfo = {
+              key: symb,
+              symbol: symb,
+              priceDifference: valueDifference,
+              percentageDifference: percentageDifference,
+            };
+
+            companies.push(companyInfo);
+          }
+        }
+
+        setCompany(companies[0]);
       })
-      .then((quotes) => {
-        console.log("Here");
-        let open = quotes[0].open;
-        let close = quotes[0].close;
-
-        let valueDifference = open - close;
-        let percentageDifference = valueDifference / close;
-
-        let companyInfo = {
-          key: symbol,
-          symbol: symbol,
-          priceDifference: valueDifference,
-          percentageDifference: percentageDifference,
-        };
-        setCompany(companyInfo);
-        companies.push(companyInfo);
-        // setPriceDifference(percentageDifference);
+      .catch((e) => {
+        console.error("Failed" + e);
       });
-  }, [symbol]);
+  }, []);
 
   const setNextSymbol = () => {
     let tempCount = count + 1;
     setCount(tempCount);
 
     setSymbol(randomSymbols[tempCount]);
+    setCompany(companies[tempCount]);
   };
   const onWrong = () => {
     console.log("Wrong!");
@@ -113,5 +112,7 @@ export default function SwapperScreen({ navigation }) {
         onWrong={() => onWrong()}
       />
     );
+  } else {
+    return <ActivityIndicator size="large" />;
   }
 }

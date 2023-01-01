@@ -28,12 +28,15 @@ export default function SwapperView({ company, onRight, onWrong }) {
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
-          source={`https://companiesmarketcap.com/img/company-logos/256/${symbol}.webp`}
+          source={{
+            uri: `https://companiesmarketcap.com/img/company-logos/256/${symbol}.webp`,
+          }}
         />
       </View>
       <View style={styles.buttonContainer}>
         <TouchableHighlight
           onPress={onPressDown}
+          underlayColor="white"
           style={styles.downButton}
         >
           <Text style={styles.buttonText}>Down</Text>
@@ -41,6 +44,7 @@ export default function SwapperView({ company, onRight, onWrong }) {
         <TouchableHighlight
           onPress={onPressUp}
           style={styles.upButton}
+          underlayColor="white"
         >
           <Text style={styles.buttonText}>Up</Text>
         </TouchableHighlight>
@@ -51,7 +55,7 @@ export default function SwapperView({ company, onRight, onWrong }) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     backgroundColor: "#FFF",
     alignItems: "center",
     flexDirection: "column",

@@ -1,6 +1,6 @@
 import SwapperView from "../views/SwapperView";
 import { useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native-web";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 const LAMBDA_URL = "https://lbn44tsfqvompigtorjt77w3ju0qcdzz.lambda-url.us-east-1.on.aws/";
 
@@ -114,6 +114,24 @@ export default function SwapperScreen({ navigation }) {
       />
     );
   } else {
-    return <ActivityIndicator size="large" />;
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 }
+
+const styles = StyleSheet.create({
+  loading: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    opacity: 0.5,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

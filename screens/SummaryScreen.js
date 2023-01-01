@@ -22,7 +22,10 @@ export default function SummaryScreen({ route, navigation }) {
           )}
         />
       </View>
-      <Button onPress={() => navigation.navigate("Home")}>Go Home</Button>
+      <Button
+        onPress={() => navigation.navigate("Home")}
+        title="Go Home"
+      ></Button>
     </SafeAreaView>
   );
 }

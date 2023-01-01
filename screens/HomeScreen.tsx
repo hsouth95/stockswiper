@@ -1,7 +1,20 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, Platform } from "react-native";
+import * as SecureStore from "expo-secure-store";
 import { TouchableOpacity } from "react-native";
+import { useEffect } from "react";
 
 export default function HomeScreen({ navigation }) {
+  let completed = false;
+  useEffect(() => {
+    if (Platform.OS !== "web") {
+      SecureStore.getItemAsync(new Date().toLocaleDateString().replaceAll("/", "-")).then((item) => {
+        if (item) {
+          completed = true;
+        }
+      });
+    }
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -11,6 +24,7 @@ export default function HomeScreen({ navigation }) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate("Swapper")}
+          disabled={completed}
         >
           <Text style={styles.buttonText}>Play!</Text>
         </TouchableOpacity>

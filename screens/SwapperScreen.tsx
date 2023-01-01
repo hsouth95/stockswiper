@@ -2,6 +2,8 @@ import SwapperView from "../views/SwapperView";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 
+import * as SecureStore from "expo-secure-store";
+
 const LAMBDA_URL = "https://lbn44tsfqvompigtorjt77w3ju0qcdzz.lambda-url.us-east-1.on.aws/";
 
 interface Company {
@@ -34,6 +36,10 @@ const POPULAR_COMPANIES: { name: string; symbol: string }[] = [
   { name: "Salesforce", symbol: "CRM" },
   { name: "Adobe", symbol: "ADBE" },
 ];
+
+async function save(key: string, value: any) {
+  await SecureStore.setItemAsync(key, value);
+}
 
 const randomSymbols = [...POPULAR_COMPANIES].sort(() => 0.5 - Math.random()).slice(0, 5);
 console.log(randomSymbols);
@@ -78,6 +84,12 @@ export default function SwapperScreen({ navigation }) {
       });
   }, []);
 
+  const setCompleted = () => {
+    const date = new Date().toLocaleDateString().replaceAll("/", "-");
+
+    save(date, true);
+  };
+
   const setNextSymbol = () => {
     let tempCount = count + 1;
     setCount(tempCount);
@@ -91,6 +103,7 @@ export default function SwapperScreen({ navigation }) {
     if (count + 1 != randomSymbols.length) {
       setNextSymbol();
     } else {
+      setCompleted();
       navigation.navigate("Summary", {
         companies: companies,
         answers: answers,
@@ -103,6 +116,7 @@ export default function SwapperScreen({ navigation }) {
     if (count + 1 != randomSymbols.length) {
       setNextSymbol();
     } else {
+      setCompleted();
       navigation.navigate("Summary", {
         companies: companies,
         answers: answers,

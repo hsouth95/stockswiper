@@ -4,7 +4,14 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 const LAMBDA_URL = "https://lbn44tsfqvompigtorjt77w3ju0qcdzz.lambda-url.us-east-1.on.aws/";
 
-const POPULAR_COMPANIES = [
+interface Company {
+  name: string;
+  symbol: string;
+  priceDifference: number;
+  percentageDifference: number;
+}
+
+const POPULAR_COMPANIES: { name: string; symbol: string }[] = [
   { name: "Apple", symbol: "AAPL" },
   { name: "Microsoft", symbol: "MSFT" },
   { name: "Alphabet Inc", symbol: "GOOG" },
@@ -30,8 +37,8 @@ const POPULAR_COMPANIES = [
 
 const randomSymbols = [...POPULAR_COMPANIES].sort(() => 0.5 - Math.random()).slice(0, 5);
 console.log(randomSymbols);
-let answers = [];
-let companies = [];
+let answers: boolean[] = [];
+let companies: Company[] = [];
 
 export default function SwapperScreen({ navigation }) {
   const [count, setCount] = useState(0);
@@ -53,8 +60,7 @@ export default function SwapperScreen({ navigation }) {
             let valueDifference = open - close;
             let percentageDifference = valueDifference / close;
 
-            let companyInfo = {
-              key: company.symbol,
+            let companyInfo: Company = {
               symbol: company.symbol,
               name: company.name,
               priceDifference: valueDifference,

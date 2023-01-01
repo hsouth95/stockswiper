@@ -3,7 +3,7 @@ import { Button, SafeAreaView, Text, FlatList, StyleSheet, View, TouchableOpacit
 export default function SummaryScreen({ route, navigation }) {
   const { companies, answers } = route.params;
 
-  companies.forEach((ele, index) => {
+  companies.forEach((ele: { correctAnswer: number }, index: number) => {
     console.log(ele);
     ele.correctAnswer = answers[index];
   });
@@ -17,7 +17,10 @@ export default function SummaryScreen({ route, navigation }) {
           style={styles.list}
           data={companies}
           renderItem={({ item }) => (
-            <View style={[styles.companyItem, item.correctAnswer ? styles.correctAnswer : styles.wrongAnswer]}>
+            <View
+              key={item.symbol}
+              style={[styles.companyItem, item.correctAnswer ? styles.correctAnswer : styles.wrongAnswer]}
+            >
               <Text style={styles.answerText}>
                 {item.name} - {item.symbol}
               </Text>

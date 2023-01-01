@@ -1,9 +1,10 @@
-import { Button, SafeAreaView, Text, FlatList, StyleSheet, View } from "react-native";
+import { Button, SafeAreaView, Text, FlatList, StyleSheet, View, TouchableOpacity } from "react-native";
 
 export default function SummaryScreen({ route, navigation }) {
   const { companies, answers } = route.params;
 
   companies.forEach((ele, index) => {
+    console.log(ele);
     ele.correctAnswer = answers[index];
   });
 
@@ -17,15 +18,23 @@ export default function SummaryScreen({ route, navigation }) {
           data={companies}
           renderItem={({ item }) => (
             <View style={[styles.companyItem, item.correctAnswer ? styles.correctAnswer : styles.wrongAnswer]}>
-              <Text style={item.correctAnswer ? styles.correctAnswer : styles.wrongAnswer}>{item.symbol}</Text>
+              <Text style={styles.answerText}>
+                {item.name} - {item.symbol}
+              </Text>
+              <Text style={styles.priceInfo}>
+                {item.priceDifference < 0 ? "-" : ""}${Math.abs(item.priceDifference.toFixed(3))}{" "}
+                {item.percentageDifference.toFixed(3)}%
+              </Text>
             </View>
           )}
         />
       </View>
-      <Button
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => navigation.navigate("Home")}
-        title="Go Home"
-      ></Button>
+      >
+        <Text style={styles.buttonText}>Go Home</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -59,23 +68,42 @@ const styles = StyleSheet.create({
   },
   companyItem: {
     flex: 1,
-    padding: 10,
+    padding: 20,
     marginBottom: 10,
-    backgroundColor: "gray",
     width: "100%",
   },
   correctAnswer: {
     color: "green",
     borderColor: "green",
+    backgroundColor: "green",
     borderWidth: 1,
-    fontSize: 50,
-    fontWeight: "bold",
   },
   wrongAnswer: {
     color: "red",
     borderColor: "red",
+    backgroundColor: "red",
     borderWidth: 1,
+  },
+  answerText: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "white",
+  },
+  priceInfo: {
+    color: "white",
+  },
+  button: {
+    backgroundColor: "#AAAAAA",
+    width: "100%",
+    padding: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  buttonText: {
     fontSize: 50,
+    color: "white",
     fontWeight: "bold",
   },
 });

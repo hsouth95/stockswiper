@@ -21,7 +21,6 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EEEEEE",
     // justifyContent: "center",
     // flexDirection: "column",
   },
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#9c88ff",
+    backgroundColor: "#2ecc71",
   },
   buttonText: {
     fontSize: 40,

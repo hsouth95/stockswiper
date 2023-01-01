@@ -24,7 +24,9 @@ export default function SwapperView({ company, onRight, onWrong }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>{symbol}</Text>
+      <Text style={styles.text}>
+        {company.name} - {symbol}
+      </Text>
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}

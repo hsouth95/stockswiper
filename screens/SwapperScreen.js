@@ -4,32 +4,31 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 const LAMBDA_URL = "https://lbn44tsfqvompigtorjt77w3ju0qcdzz.lambda-url.us-east-1.on.aws/";
 
-const POPULAR_SYMBOLS = [
-  "AAPL",
-  "MSFT",
-  "GOOG",
-  "AMZN",
-  "TSLA",
-  "BRK-B",
-  "XOM",
-  "V",
-  "WMT",
-  "NVDA",
-  "MA",
-  "PFE",
-  "KO",
-  "META",
-  "PEP",
-  "SHEL",
-  "MCD",
-  "DIS",
-  "CSCO",
-  "ACN",
-  "CRM",
-  "ADBE",
+const POPULAR_COMPANIES = [
+  { name: "Apple", symbol: "AAPL" },
+  { name: "Microsoft", symbol: "MSFT" },
+  { name: "Alphabet Inc", symbol: "GOOG" },
+  { name: "Amazon", symbol: "AMZN" },
+  { name: "Tesla", symbol: "TSLA" },
+  { name: "Berkshire Hathaway Inc", symbol: "BRK-B" },
+  { name: "Exxon Mobil", symbol: "XOM" },
+  { name: "Visa", symbol: "V" },
+  { name: "Walmart", symbol: "WMT" },
+  { name: "NVIDIA", symbol: "NVDA" },
+  { name: "Pfizer", symbol: "PFE" },
+  { name: "Coca-Cola", symbol: "KO" },
+  { name: "Meta", symbol: "META" },
+  { name: "PepsiCo", symbol: "PEP" },
+  { name: "Shell", symbol: "SHEL" },
+  { name: "McDonald's", symbol: "MCD" },
+  { name: "Walt Disney", symbol: "DIS" },
+  { name: "Cisco", symbol: "CSCO" },
+  { name: "Accenture", symbol: "ACN" },
+  { name: "Salesforce", symbol: "CRM" },
+  { name: "Adobe", symbol: "ADBE" },
 ];
 
-const randomSymbols = [...POPULAR_SYMBOLS].sort(() => 0.5 - Math.random()).slice(0, 5);
+const randomSymbols = [...POPULAR_COMPANIES].sort(() => 0.5 - Math.random()).slice(0, 5);
 console.log(randomSymbols);
 let answers = [];
 let companies = [];
@@ -45,9 +44,9 @@ export default function SwapperScreen({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        for (const symb of randomSymbols) {
-          if (data[symb]) {
-            const chosenCompany = data[symb][0];
+        for (const company of randomSymbols) {
+          if (data[company.symbol]) {
+            const chosenCompany = data[company.symbol][0];
             let open = chosenCompany.open;
             let close = chosenCompany.close;
 
@@ -55,8 +54,9 @@ export default function SwapperScreen({ navigation }) {
             let percentageDifference = valueDifference / close;
 
             let companyInfo = {
-              key: symb,
-              symbol: symb,
+              key: company.symbol,
+              symbol: company.symbol,
+              name: company.name,
               priceDifference: valueDifference,
               percentageDifference: percentageDifference,
             };

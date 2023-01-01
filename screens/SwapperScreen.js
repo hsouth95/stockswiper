@@ -103,6 +103,7 @@ export default function SwapperScreen({ navigation }) {
       });
     }
   };
+
   if (company) {
     return (
       <SwapperView

@@ -1,10 +1,8 @@
 import { StyleSheet, Text, View, Image, SafeAreaView, TouchableHighlight } from "react-native";
 import React, { useEffect, useState } from "react";
-import yahooFinance from "yahoo-finance2";
 import { useNavigation } from "@react-navigation/native";
 
 export default function SwapperView({ company, onRight, onWrong }) {
-  console.log("Rendering!");
   const [symbol, setSymbol] = useState(company?.symbol);
   const [priceDifference, setPriceDifference] = useState(company?.priceDifference);
 
@@ -23,26 +21,6 @@ export default function SwapperView({ company, onRight, onWrong }) {
       onRight();
     }
   };
-
-  useEffect(() => {
-    let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    yahooFinance
-      .historical(symbol, {
-        period1: yesterday,
-        interval: "1d",
-      })
-      .then((quotes) => {
-        let open = quotes[0].open;
-        let close = quotes[0].close;
-
-        let valueDifference = open - close;
-        let percentageDifference = valueDifference / close;
-
-        setPriceDifference(percentageDifference);
-      });
-  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,7 +51,7 @@ export default function SwapperView({ company, onRight, onWrong }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: "#FFF",
     alignItems: "center",
     flexDirection: "column",

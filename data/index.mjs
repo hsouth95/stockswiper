@@ -1,4 +1,4 @@
-import yahooFinance from 'yahoo-finance2';
+import yahooFinance from "yahoo-finance2";
 
 const POPULAR_SYMBOLS = [
   "AAPL",
@@ -29,22 +29,24 @@ const POPULAR_SYMBOLS = [
 
 let financeInfo = {};
 
+export const handler = async function (event, context) {
+  if (Object.keys(financeInfo).length >= 1) {
+    return financeInfo;
+  }
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  for (const symbol of POPULAR_SYMBOLS) {
+    let data = {};
+    try {
+      data = await yahooFinance.historical(symbol, {
+        period1: yesterday,
+        interval: "1d",
+      });
+      financeInfo[symbol] = data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-export const handler =  async function(event, context) {
-	if (Object.keys(financeInfo).length >= 1) {
-	  return financeInfo;
-	}
-	let yesterday = new Date()
-	yesterday.setDate(yesterday.getDate() - 1);
-	for(const symbol of POPULAR_SYMBOLS){
-	  let data = {};
-	  try {
-		  data = await yahooFinance.historical(symbol, { period1: yesterday, interval: "1d", });
-		  financeInfo[symbol] = data;
-	  } catch(e) {
-	    console.log(e);
-	  }
-	}
-	
-	return financeInfo;
-}
+  return financeInfo;
+};

@@ -1,10 +1,19 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, TouchableHighlight } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  SafeAreaView,
+  TouchableHighlight,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 export default function SwapperView({ company, onRight, onWrong }) {
   const [symbol, setSymbol] = useState(company?.symbol);
-  const [priceDifference, setPriceDifference] = useState(company?.priceDifference);
+  const [priceDifference, setPriceDifference] = useState(
+    company?.priceDifference
+  );
 
   const onPressUp = () => {
     if (priceDifference < 0) {

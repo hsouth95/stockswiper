@@ -7,7 +7,9 @@ export default function HomeScreen({ navigation }) {
   let completed = false;
   useEffect(() => {
     if (Platform.OS !== "web") {
-      SecureStore.getItemAsync(new Date().toLocaleDateString().replaceAll("/", "-")).then((item) => {
+      SecureStore.getItemAsync(
+        new Date().toLocaleDateString().replaceAll("/", "-")
+      ).then((item) => {
         if (item) {
           completed = true;
         }

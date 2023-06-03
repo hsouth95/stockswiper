@@ -13,18 +13,9 @@ export default function App() {
         initalRouteHome="Home"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          name="Swapper"
-          component={SwapperScreen}
-        />
-        <Stack.Screen
-          name="Summary"
-          component={SummaryScreen}
-        />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Swapper" component={SwapperScreen} />
+        <Stack.Screen name="Summary" component={SummaryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

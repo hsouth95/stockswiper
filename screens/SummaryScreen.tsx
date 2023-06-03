@@ -1,4 +1,12 @@
-import { Button, SafeAreaView, Text, FlatList, StyleSheet, View, TouchableOpacity } from "react-native";
+import {
+  Button,
+  SafeAreaView,
+  Text,
+  FlatList,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
 export default function SummaryScreen({ route, navigation }) {
   const { companies, answers } = route.params;
@@ -11,7 +19,9 @@ export default function SummaryScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Finished!</Text>
-      <Text style={styles.subTitle}>You got {answers.filter((x) => x).length} answers right.</Text>
+      <Text style={styles.subTitle}>
+        You got {answers.filter((x) => x).length} answers right.
+      </Text>
       <View style={styles.listContainer}>
         <FlatList
           style={styles.list}
@@ -19,13 +29,17 @@ export default function SummaryScreen({ route, navigation }) {
           renderItem={({ item }) => (
             <View
               key={item.symbol}
-              style={[styles.companyItem, item.correctAnswer ? styles.correctAnswer : styles.wrongAnswer]}
+              style={[
+                styles.companyItem,
+                item.correctAnswer ? styles.correctAnswer : styles.wrongAnswer,
+              ]}
             >
               <Text style={styles.answerText}>
                 {item.name} - {item.symbol}
               </Text>
               <Text style={styles.priceInfo}>
-                {item.priceDifference < 0 ? "-" : ""}${Math.abs(item.priceDifference.toFixed(3))}{" "}
+                {item.priceDifference < 0 ? "-" : ""}$
+                {Math.abs(item.priceDifference.toFixed(3))}{" "}
                 {item.percentageDifference.toFixed(3)}%
               </Text>
             </View>

@@ -4,7 +4,8 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 import * as SecureStore from "expo-secure-store";
 
-const LAMBDA_URL = "https://lbn44tsfqvompigtorjt77w3ju0qcdzz.lambda-url.us-east-1.on.aws/";
+const LAMBDA_URL =
+  "https://lbn44tsfqvompigtorjt77w3ju0qcdzz.lambda-url.us-east-1.on.aws/";
 
 interface Company {
   name: string;
@@ -41,7 +42,9 @@ async function save(key: string, value: any) {
   await SecureStore.setItemAsync(key, value);
 }
 
-const randomSymbols = [...POPULAR_COMPANIES].sort(() => 0.5 - Math.random()).slice(0, 5);
+const randomSymbols = [...POPULAR_COMPANIES]
+  .sort(() => 0.5 - Math.random())
+  .slice(0, 5);
 console.log(randomSymbols);
 let answers: boolean[] = [];
 let companies: Company[] = [];

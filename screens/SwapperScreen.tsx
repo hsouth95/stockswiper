@@ -52,7 +52,7 @@ let companies: Company[] = [];
 export default function SwapperScreen({ navigation }) {
   const [count, setCount] = useState(0);
   const [symbol, setSymbol] = useState(randomSymbols[count]);
-  const [company, setCompany] = useState(null);
+  const [company, setCompany] = useState<Company | null>(null);
 
   useEffect(() => {
     fetch(LAMBDA_URL, {
